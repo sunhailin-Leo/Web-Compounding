@@ -69,35 +69,38 @@ public class DataServlet extends HttpServlet{
 		data.setYear(DataYear);
 		data.setRate(DataRate);
 		data.setSum(DataSum);
+		
 		boolean result = DataDao.getInstance().saveData(data);
 		response.setContentType("text/html");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out = response.getWriter();
 		//out.println("<%@ page language='java' import='java.util.*' pageEncoding='UTF-8'%>");
-		//out.println("<%response.sendRedirect('index.jsp'); %>");
-		out.println("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">");
-		out.println("<HTML>");
-		out.println("  <HEAD><TITLE>JDBC访问数据库</TITLE></HEAD>");
-		out.println("  <BODY>");
+		//out.println("<script>");
+		//out.println("response.sendRedirect('fuli.jsp');");
+		//out.println("</script>");
+		//out.println("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">");
+		//out.println("<HTML>");
+		//out.println("  <HEAD><TITLE>数据存入数据库</TITLE></HEAD>");
+		//out.println("  <BODY>");
 		if(result){
-			//out.println("<font color='green' size=2>注册成功！</font>");
-			//out.println("<script>alect('注册成功');window.location.href='index.jsp';</script>");
 			out.println("<script>");
 			out.print("alert('存入成功!');");
-			out.print("window.location.href='fuli.jsp'");
+			//out.println("response.sendRedirect('fuli.jsp');");
+			//out.print("window.location.href='fuli.jsp'");
 			out.println("</script>");
 		}else{	
-			//out.println("<font color='orangered' size=2>注册失败！</font>");
-			//out.println("<script>alect('注册成功');window.location.href='index.jsp';</script>");
+	
 			out.println("<script>");
 			out.print("alert('存入失败!');");
-			out.print("window.location.href='fuli.jsp'");
+			//out.print("window.location.href='fuli.jsp'");
+			//out.println("response.sendRedirect('fuli.jsp');");
 			out.println("</script>");
 		}
-		out.println("  </BODY>");
+		//out.println("  </BODY>");
 		out.println("</HTML>");
 		out.flush();
 		out.close();
+		
 	}
 	
 	/**

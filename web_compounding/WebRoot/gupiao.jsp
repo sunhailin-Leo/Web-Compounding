@@ -10,7 +10,7 @@ String path = request.getContextPath();
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="this is my page">
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
 
 <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"
 	type="text/css"></link>
@@ -53,14 +53,14 @@ String path = request.getContextPath();
 								class="icon-bar"></span> <span class="icon-bar"></span> <span
 								class="icon-bar"></span>
 						</button>
-						<a class="navbar-brand" href="#">投资计算器</a>
+						<a class="navbar-brand" href="fuli.jsp"><strong>投资计算器</strong></a>
 					</div>
 
 					<!-- Collect the nav links, forms, and other content for toggling -->
 					<div class="collapse navbar-collapse"
 						id="bs-example-navbar-collapse-1">
 						<ul class="nav navbar-nav">
-							<li class=""><a href="#">商品查询 <span class="sr-only">(current)</span>
+							<li class=""><a href="list.jsp">Funciton Comming Soon<span class="sr-only">(current)</span>
 							</a>
 							</li>
 
@@ -83,6 +83,7 @@ String path = request.getContextPath();
 			<li><a href="lilv.jsp">求报酬率</a></li>
 			<li><a href="dingtou.jsp">定投计算</a></li>
 			<li><a href="daikuan.jsp">贷款</a></li>
+			<li><a href="#">投资报表</a></li>
 		</div>
 		<div class="tabBodyContainer">
 			<div class="tabBodyItem tabBodyCurrent">
@@ -165,13 +166,13 @@ String path = request.getContextPath();
 
 	<div class="footer">
 		<div class="footer_media_test">
-			<p>©2004-2014 广州康大职业技术学院 版权所有</p>
+			<p>©2016-2016 孙海林 江志彬 版权所有</p>
 
-			<p>地址：广州市萝岗区九龙镇华师康大教育园</p>
+			<p>信息：广州商学院 商软2班  223/225</p>
 
-			<p>粤ICP备05065136号</p>
+			<p>The First Version</p>
 
-			<p>联系电话: 020-82872088 82872188</p>
+			<p>联系方式: 你猜猜</p>
 		</div>
 	</div>
 
