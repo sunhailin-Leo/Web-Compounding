@@ -90,10 +90,11 @@ String path = request.getContextPath();
 		<div class="tabBodyContainer">
 			<div class="tabBodyItem tabBodyCurrent">
 				<p>欢迎使用投资计算器</p>
+				<div align="center">
 					<form action= "" >
 						<table class="table">
 							<tr >
-								<td width="100" class="labelTd">
+								<td class="labelTd" style=" width: 235px; " >
 									<span class="red">*</span>投入的本金：
 								</td>
 								<td>
@@ -141,6 +142,7 @@ String path = request.getContextPath();
 							</tr>
 						</table>
 					</form>
+					</div>
 			</div>
 			<div class="tabBodyItem">
 				<p></p>

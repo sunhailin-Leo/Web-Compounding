@@ -92,7 +92,7 @@ String path = request.getContextPath();
 					<form>
 						<table class="table">
 							<tr >
-								<td width="100" class="labelTd">
+								<td class="labelTd" style=" width: 235px; " >
 									<span class="red">*</span>本金：
 								</td>
 								<td>

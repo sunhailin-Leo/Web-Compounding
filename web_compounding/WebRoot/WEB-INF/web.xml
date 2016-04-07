@@ -4,27 +4,43 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
 	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+	
+	<!-- fuli.jsp提交 -->
+	<servlet>
+		<description>JSP MYSQL SERVLET</description>
+		<display-name>Mysql</display-name>
+		<servlet-name>DataServlet</servlet-name>
+		<servlet-class>com.leo.servlet.DataServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>DataServlet</servlet-name>
+		<url-pattern>/DataServlet</url-pattern>
+	</servlet-mapping>
+
+	<!-- list.jsp删除 -->
+	<servlet>
+		<servlet-name>DataDeleteServlet</servlet-name>
+		<servlet-class>com.leo.servlet.DataDeleteServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>DataDeleteServlet</servlet-name>
+		<url-pattern>/DataDeleteServlet</url-pattern>
+	</servlet-mapping>
+	
+
   
-  <servlet>
-    <description>JSP MYSQL SERVLET</description>
-        <display-name>Mysql</display-name>
-    <servlet-name>DataServlet</servlet-name>
-    <servlet-class>com.leo.servlet.DataServlet</servlet-class>
-  </servlet>
-
-  <servlet-mapping>
-    <servlet-name>DataServlet</servlet-name>
-    <url-pattern>/DataServlet</url-pattern>
-  </servlet-mapping>
-
 
   <welcome-file-list>
     <welcome-file>fuli.jsp</welcome-file>
   </welcome-file-list>
+  
   <resource-ref>
   	<description>conn</description>
   	<res-ref-name>jdbc/mysql</res-ref-name>
   	<res-type>javax.sql.DataSource</res-type>
   	<res-auth>Container</res-auth>
   </resource-ref>
+  
 </web-app>

@@ -3,8 +3,8 @@ package com.leo.bean;
 public class DataReturnInfo {
 	private int id;
 	private float startMoney;
-	private float year;
-	private float rate;
+	private int year;
+	private double rate;
 	private float sum;
 
 	public int getId() {
@@ -22,19 +22,19 @@ public class DataReturnInfo {
 		this.startMoney = startMoney;
 	}
 
-	public float getYear() {
+	public int getYear() {
 		return year;
 	}
 
-	public void setYear(float year) {
+	public void setYear(int year) {
 		this.year = year;
 	}
 
-	public float getRate() {
+	public double getRate() {
 		return rate;
 	}
 
-	public void setRate(float rate) {
+	public void setRate(double rate) {
 		this.rate = rate;
 	}
 
@@ -47,12 +47,13 @@ public class DataReturnInfo {
 	}
 	
 	
-	public DataReturnInfo(int id,float startMoney,float year,float rate ,float sum)
+	public DataReturnInfo(int id,float startMoney,int year,double rate ,float sum)
 	{
 		super();
 		this.id = id;
 		this.startMoney = startMoney;
 		this.year = year;
+		this.rate = rate;
 		this.sum = sum;
 
 	}

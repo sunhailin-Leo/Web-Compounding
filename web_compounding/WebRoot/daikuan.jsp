@@ -94,7 +94,7 @@ String path = request.getContextPath();
 					<form action="">
 						<table class="table">
 							<tr >
-								<td width="100" class="labelTd">
+								<td class="labelTd" style=" width: 235px; " >
 									<span class="red">*</span>贷款金额：
 								</td>
 								<td>

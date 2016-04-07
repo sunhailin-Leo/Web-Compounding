@@ -41,24 +41,28 @@ public class DataServlet extends HttpServlet{
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException 
 	{
 		request.setCharacterEncoding("UTF-8");
-		String startMoney = request.getParameter("startMoney");
+		String startMoney = request.getParameter("num1");
+		//System.out.println(request.getParameter("num1"));
 		float DataStartMoney = 0;
 		if(startMoney!=null&&!startMoney.equals("")){
 			DataStartMoney = Float.parseFloat(startMoney);
 		}
-		String year = request. getParameter("years");
+		String year = request. getParameter("num2");
+		//System.out.println(request.getParameter("num2"));
 		float DataYear = 0;
 		if(year!=null&&!year.equals(""))
 		{
 			DataYear = Float.parseFloat(year);
 		}
-		String rate = request.getParameter("r");
+		String rate = request.getParameter("num3");
+		//System.out.println(request.getParameter("num3"));
 		float DataRate = 0;
 		if(rate!=null&&!rate.equals(""))
 		{
 			DataRate = Float.parseFloat(rate);
 		}
-		String sum = request.getParameter("endMoney");
+		String sum = request.getParameter("sum");
+		//System.out.println(request.getParameter("sum"));
 		float DataSum = 0;
 		if(sum!=null&&!sum.equals(""))
 		{

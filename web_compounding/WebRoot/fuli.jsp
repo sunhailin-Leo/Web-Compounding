@@ -19,19 +19,89 @@ String path = request.getContextPath();
 <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="prototype/js/jquery-1.7.min.js"></script>
 <script type="text/javascript" src="function.js"></script>
-<script type="text/javascript" src="request.js"></script>
 
 
 <script type="text/javascript">
-
-	function add() {
-		var i = parseFloat(document.getElementById("num1").value);
-		var j = parseFloat(document.getElementById("num2").value);
-		var k = parseFloat(document.getElementById("num3").value);
-		var sum = i * Math.pow(1 + k, j);	
-		text = document.getElementById("endMoney");
-		text.value = sum;
-		sendRequest("request.js?&num1="+i+"&num2"+j+"&num3"+k+"&endMoney"+sum);
+var xmlHttp;
+	//创建xmlHttp
+	function createXMLHttpRequest()
+	{
+	 if(window.ActiveXObject)
+	 {
+	  xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
+	 }
+	 else if(window.XMLHttpRequest)
+	 {
+	  xmlHttp=new XMLHttpRequest();
+	 }
+	}
+	
+	//拼出要发送的姓名数据
+	function createQueryString()
+	{
+	 var i = parseFloat(document.getElementById("num1").value);
+	 var j = parseFloat(document.getElementById("num2").value);
+	 var k = parseFloat(document.getElementById("num3").value);
+	 var sum = i * Math.pow(1 + k, j);
+	 if(isNaN(sum))
+	 {
+		alert("FUCK");
+		sum = "";
+	 }
+	 text = document.getElementById("endMoney");
+	 text.value = sum;
+	 var queryString = "num1=" + i + "&num2=" + j + "&num3=" + k + "&sum=" + sum; 
+	 //alert(queryString);
+	 return queryString;
+	}
+	/*
+	//使用get方式发送
+	function doRequestUsingGET()
+	{
+	 createXMLHttpRequest();
+	 var queryString="./GetAndPostExample?";
+	 queryString=queryString+createQueryString() + "&timeStamp=" + new Date().getTime();
+	 xmlHttp.onreadystatechange=handleStateChange;
+	 xmlHttp.open("GET",queryString,true);
+	 xmlHttp.send(null);
+	}
+	*/
+	//使用post方式发送
+	function doRequestUsingPost()
+	{
+	 createXMLHttpRequest();
+	 //var url="./GetAndPostExample?timeStamp=" + new Date().getTime();
+	 var url ="./DataServlet?";
+	 var queryString=createQueryString();
+	 xmlHttp.open("POST",url,true);
+	 xmlHttp.onreadystatechange=handleStateChange;
+	 xmlHttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+	 xmlHttp.send(queryString);
+	}
+	
+	
+	function handleStateChange()
+	{
+	 if(xmlHttp.readyState==4)
+	 {
+	  if(xmlHttp.status==200)
+	  {
+	   //parseResults();
+	   //alert("数据提交成功");
+	  }
+	 }
+	}
+	//解析返回值
+	function parseResults()
+	{
+	 var responseDiv=document.getElementById("serverResponse");
+	 if(responseDiv.hasChildNodes())
+	 {
+	  responseDiv.removeChild(responseDiv.childNodes[0]);
+	 }
+	 var responseText=document.createTextNode(xmlHttp.responseText);
+	  alert("后台返回的返回值： "+xmlHttp.responseText);
+	 responseDiv.appendChild(responseText);
 	}
 </script>
 
@@ -39,7 +109,7 @@ String path = request.getContextPath();
 		function win(){
 			window.onload=document.getElementById("num1").focus();
 		}
-	</script>
+</script>
 	
 
 </head>
@@ -77,7 +147,6 @@ String path = request.getContextPath();
 		</nav>
 	</div>
 
-
 	<div id="TabMain">
 		<div class="tabItemContainer">
 			<li><a href="fuli.jsp" class="tabItemCurrent">复利计算</a></li>
@@ -92,7 +161,7 @@ String path = request.getContextPath();
 		<div class="tabBodyContainer">
 			<div class="tabBodyItem tabBodyCurrent">
 				<p>欢迎使用投资计算器</p>
-				<form id = "form1" action="DataServlet"  method = "post" onsubmit="autoSubmitFun();">
+				<form id = "form1" action="#" method = "post" >
 						<table class="table"> 	
 							<tr >
 								<td width="100" class="labelTd">
@@ -127,7 +196,7 @@ String path = request.getContextPath();
 									<span class="red">*</span>终值：
 								</td>
 								<td>
-									<input  class="form-control" name="endMoney" id="endMoney"  readonly="true" value = "">
+									<input  class="form-control" name="endMoney" id="endMoney"  onblur = "" readonly="readonly" value = "">
 									
 									<span class="errorMsg"></span>
 								</td>
@@ -135,10 +204,10 @@ String path = request.getContextPath();
 							
 							<tr>
 								<td class="labelTd">
-									<input class="btn btn-success" type="submit" value="重置" onclick="cls()">
+									<input class="btn btn-success" type="reset" value="重置" onclick="cls()">
 								</td>
 								<td>
-									<input class="form-control btn btn-success" type="submit" value="计算" onclick="add()" >
+									<input class="form-control btn btn-success" type="button" value="计算" onclick="doRequestUsingPost()" >
 								</td>
 							</tr>
 						</table>
@@ -168,7 +237,7 @@ String path = request.getContextPath();
 		</div>
 	</div>
 	<hr />
-
+	<div id="serverResponse"></div>
 	<div class="footer">
 		<div class="footer_media_test">
 			<p>©2016-2016 孙海林 江志彬 版权所有</p>

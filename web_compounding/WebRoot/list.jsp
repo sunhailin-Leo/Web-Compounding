@@ -26,6 +26,30 @@ String path = request.getContextPath();
 <script type="text/javascript" src="request.js"></script>
 
 
+
+<script type="text/javascript">
+
+function modify()
+{
+	alert("Coming Soon!");
+}
+
+
+
+function datadelete(i)
+{	
+	var result;
+	for ( var s = 0; s < arguments.length; s++) 
+	{
+		result = arguments[s];
+	}
+	document.getElementById("deleteresult").value = result;
+	alert("已提交");
+}
+
+</script>
+
+
 </head>  
   <body>
     <div class="navigation">
@@ -73,34 +97,66 @@ String path = request.getContextPath();
 			<li><a href="daikuan.jsp">贷款</a></li>
 			<li><a href="list.jsp" class="tabItemCurrent">投资报表</a></li>
 		</div>
-		<div class="tabBodyContainer">
+		<div class="tabBodyContainer" style ="height: 702px;">
 			<div class="tabBodyItem tabBodyCurrent">
 				<p>欢迎使用投资计算器</p>
-				<table border="1" align="center">
-					<tr>
-						<td>	<strong>投资目录</strong>	</td>
-						<td>	<strong>金额</strong>		</td>
-						<td>	<strong>年份</strong>		</td>
-						<td>	<strong>利率</strong>		</td>
-						<td>	<strong>终值</strong>		</td>
-					</tr>
-					<%
-						DataReturn DR = new DataReturn();
-						List<DataReturnInfo> list = DR.readFirstTitle();
-						for (DataReturnInfo tl : list){
-					%>
-					<tr>
-						<td><%=tl.getId()%></td>
-						<td><%=tl.getStartMoney()%></td>
-						<td><%=tl.getYear()%>></td>
-						<td><%=tl.getRate()%></td>
-						<td><%=tl.getSum()%></td>
-					</tr>
-					<%
+				<form  id = "form2" action="DataDeleteServlet"  method = "post"> 
+					<table class="table table-hover" border="1" align="center"
+						style="border-top-width: 2px; margin-right: 1px;border-left-width: 1px;border-right-width: 1px;border-bottom-width: 2px;margin-top: 1px;">
+						<tr>
+							<td><strong>投资目录</strong></td>
+							<td><strong>金额</strong>
+							</td>
+							<td><strong>年份</strong>
+							</td>
+							<td><strong>利率</strong>
+							</td>
+							<td><strong>终值</strong>
+							</td>
+							<td><strong>修改/删除</strong></td>
+						</tr>
+						<%
+							DataReturn DR = new DataReturn();
+							List<DataReturnInfo> list = DR.readFirstTitle();
+							int i = 0;
+							for (DataReturnInfo tl : list) {
+								int j = list.get(i).getId();
+						%>
+						<tr>
+							<td
+								style="padding-bottom: -5;padding-top: 4px;padding-bottom: 0px;"><%=tl.getId()%></td>
+							<td
+								style="padding-bottom: -5;padding-top: 4px;padding-bottom: 0px;"><%=tl.getStartMoney()%></td>
+							<td
+								style="padding-bottom: -5;padding-top: 4px;padding-bottom: 0px;"><%=tl.getYear()%></td>
+							<td
+								style="padding-bottom: -5;padding-top: 4px;padding-bottom: 0px;"><%=tl.getRate()%></td>
+							<td
+								style="padding-bottom: -5;padding-top: 4px;padding-bottom: 0px;"><%=tl.getSum()%></td>
+							<td
+								style="padding-bottom: -5;padding-top: 4px;padding-bottom: 0px;">
+								<ul>
+									<li><button id="modify" name = "submit" type="submit" class="btn btn-info" onclick="modify()" >修改</button></li>
+									<li><button id="delete" name = "delete" type="submit" class="btn btn-danger" onclick="datadelete('<%=j%>');" >删除</button></li>
+								</ul>
+								<input type="hidden" id = "deleteresult" name="deleteresult" value="">
+							</td>
+						</tr>
+						<%
+							i++;
 						}
-					%>
-				</table>
-
+						%>
+					</table>
+				</form>
+				<div align="center" style = "margin-top: 161px;">
+					<ul class="pagination">
+						<li><a href='#'>&laquo;</a></li>
+						<li><a href='#'>1 </a></li>
+						<li><a href='#'>2</a></li>
+						<li><a href='#'>3</a></li>
+						<li><a href='#'>&raquo;</a></li>
+					</ul>
+				</div>
 			</div>
 			<div class="tabBodyItem">
 				<p></p>
@@ -129,7 +185,7 @@ String path = request.getContextPath();
 
 
 
-	<div class="footer">
+	<div class="footer" style="border-top-width: 100px;margin-top: 200px;">
 		<div class="footer_media_test">
 			<p>©2016-2016 孙海林 江志彬 版权所有</p>
 
