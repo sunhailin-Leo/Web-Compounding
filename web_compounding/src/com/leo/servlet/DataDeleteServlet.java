@@ -42,10 +42,8 @@ public class DataDeleteServlet extends HttpServlet{
 	{
 		request.setCharacterEncoding("UTF-8");
 		int id = Integer.parseInt(request.getParameter("deleteresult"));
-		System.out.println(id);
 		DataDeleteInfo DDI = new DataDeleteInfo();
 		DDI.setId(id);
-		System.out.println(id);
 		boolean result = DataDeleteDao.getInstance().delete(DDI);
 		response.setContentType("text/html");
 		response.setCharacterEncoding("UTF-8");
@@ -53,7 +51,6 @@ public class DataDeleteServlet extends HttpServlet{
 		if(result){
 			out.println("<script>");
 			out.print("alert('…æ≥˝≥…π¶!');");
-			//out.println("response.sendRedirect('fuli.jsp');");
 			out.print("window.location.href='list.jsp'");
 			out.println("</script>");
 		}else{	
@@ -61,10 +58,8 @@ public class DataDeleteServlet extends HttpServlet{
 			out.println("<script>");
 			out.print("alert('¥Ê»Î ß∞‹!');");
 			out.print("window.location.href='fuli.jsp'");
-			//out.println("response.sendRedirect('list.jsp');");
 			out.println("</script>");
 		}
-		//out.println("  </BODY>");
 		out.println("</HTML>");
 		out.flush();
 		out.close();

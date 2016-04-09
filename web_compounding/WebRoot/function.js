@@ -1,36 +1,35 @@
-function cls(){
+function cls()
+		{
     		document.getElementById("num1").value=""; 
     		document.getElementById("num2").value=""; 
     		document.getElementById("num3").value=""; 
     		document.getElementById("endMoney").value=""; 
+    		$("#btnSave").attr("disabled", false); 
     	}
 
-function isnum(){
-	if(isNaN(document.getElementById("num1").value)||document.getElementById("num1").value>=parseFloat('9999999999999.99999999'))
-	{
+function isNum(){
+	if(isNaN(document.getElementById("num1").value)){
 		document.getElementById("num1").style.color='#FF0000';
 		document.getElementById("num1").focus();
 	}
 	else{
 		document.getElementById("num1").style.color='#000000';
 	}
-	if(isNaN(document.getElementById("num2").value)||document.getElementById("num2").value>parseInt('99')){
+	if(isNaN(document.getElementById("num2").value)){
 		document.getElementById("num2").style.color='#FF0000';
 		document.getElementById("num2").focus();
 	}
 	else{
 		document.getElementById("num2").style.color='#000000';
 	}
-	if(isNaN(document.getElementById("num3").value)||document.getElementById("num3").value<=parseFloat('0')){
+	if(isNaN(document.getElementById("num3").value)){
 		document.getElementById("num3").style.color='#FF0000';
 		document.getElementById("num3").focus();
 	}
 	else{
 		document.getElementById("num3").style.color='#000000';
 	}
-	
-	if(isNaN(document.getElementById("endMoney").value)||document.getElementById("endMoney").value>=parseFloat('9999999999999.99999999'))
-	{
+	if(isNaN(document.getElementById("endMoney").value)){
 		document.getElementById("endMoney").style.color='#FF0000';
 		document.getElementById("endMoney").focus();
 	}
@@ -39,7 +38,6 @@ function isnum(){
 	}	
 	
 }
-
 
 $(document).ready(function(e) {
 	SidebarTabHandler.Init();

@@ -234,6 +234,13 @@ table {
   .navbar {
     display: none;
   }
+  
+  .navbar .nav > li .dropdown-menu {
+	margin: 0;
+  }
+  .navbar .nav > li:hover .dropdown-menu {
+	display: block;
+  }
   .table td,
   .table th {
     background-color: #fff !important;

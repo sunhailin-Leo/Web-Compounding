@@ -1,6 +1,6 @@
 <%@page import="com.leo.bean.DataReturnInfo"%>
 <%@page import="com.leo.dao.DataReturn"%>
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.util.*,java.io.*" pageEncoding="UTF-8"%>
 <%
 String path = request.getContextPath();
 %>
@@ -16,12 +16,14 @@ String path = request.getContextPath();
 	<meta http-equiv="description" content="This is my page">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"
-	type="text/css"></link>
+<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"type="text/css"></link>
 <link rel="stylesheet" href="prototype/css/common.css" type="text/css" />
 <link rel="stylesheet" href="mycss.css" type="text/css" />
+<link rel="stylesheet" href="prototype/css/pagination.css" type="text/css"></link>
+
 <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="prototype/js/jquery-1.7.min.js"></script>
+<script type="text/javascript" src="prototype/js/jquery.pagination.js"></script>
 <script type="text/javascript" src="function.js"></script>
 <script type="text/javascript" src="request.js"></script>
 
@@ -44,10 +46,48 @@ function datadelete(i)
 		result = arguments[s];
 	}
 	document.getElementById("deleteresult").value = result;
-	alert("已提交");
 }
 
 </script>
+
+  <script language="JavaScript">   
+    //鼠标点击选择行时候变色
+	function change(change) 
+	{
+		var oObj = window.event.srcElement;
+		//alert(change.tagName.toLowerCase());
+		if(oObj.tagName.toLowerCase() == "td"){   
+			var oTr = oObj.parentNode;   
+			for(var i=1; i<document.all.table1.rows.length; i++)   
+			{   
+				document.all.table1.rows[i].style.backgroundColor = "";   
+				document.all.table1.rows[i].tag = false;   
+			}
+			oTr.style.backgroundColor = "#CCCCFF";   
+			oTr.tag = true;   
+		}
+	}
+    //鼠标点击另外一行时关闭已选行变色
+	function out() 
+	{
+		var oObj = event.srcElement;
+		if(oObj.tagName.toLowerCase() == "td"){
+			var oTr = oObj.parentNode;
+			if(!oTr.tag) oTr.style.backgroundColor = "";
+		}
+	}
+	//鼠标移动到选择行上时的行变色
+	function over()
+	{   
+		var oObj = event.srcElement;
+		if(oObj.tagName.toLowerCase() == "td"){   
+		var oTr = oObj.parentNode;
+		if(!oTr.tag) oTr.style.backgroundColor = "#E1E9FD";
+		}
+	}
+ </script>
+
+
 
 
 </head>  
@@ -97,12 +137,12 @@ function datadelete(i)
 			<li><a href="daikuan.jsp">贷款</a></li>
 			<li><a href="list.jsp" class="tabItemCurrent">投资报表</a></li>
 		</div>
-		<div class="tabBodyContainer" style ="height: 702px;">
+		<div class="tabBodyContainer" style ="height: 520px;">
 			<div class="tabBodyItem tabBodyCurrent">
 				<p>欢迎使用投资计算器</p>
 				<form  id = "form2" action="DataDeleteServlet"  method = "post"> 
 					<table class="table table-hover" border="1" align="center"
-						style="border-top-width: 2px; margin-right: 1px;border-left-width: 1px;border-right-width: 1px;border-bottom-width: 2px;margin-top: 1px;">
+						style="border-top-width: 2px; margin-right: 1px;border-left-width: 1px;border-right-width: 1px;border-bottom-width: 2px;margin-top: 1px; margin-bottom 1px;">
 						<tr>
 							<td><strong>投资目录</strong></td>
 							<td><strong>金额</strong>
@@ -115,48 +155,54 @@ function datadelete(i)
 							</td>
 							<td><strong>修改/删除</strong></td>
 						</tr>
-						<%
+							<%
+							int p;
+							String page1=request.getParameter("page");//获得按下的按钮值
+							if(page1==null){
+								p=1;
+							}
+							else{
+								p=Integer.parseInt(page1);
+							}
 							DataReturn DR = new DataReturn();
 							List<DataReturnInfo> list = DR.readFirstTitle();
+							int rowcount=list.size();
 							int i = 0;
-							for (DataReturnInfo tl : list) {
+							int count=0;
+							p=p*5-5;
+								while(p<list.size()&&count<5) {
 								int j = list.get(i).getId();
-						%>
+							%>
 						<tr>
 							<td
-								style="padding-bottom: -5;padding-top: 4px;padding-bottom: 0px;"><%=tl.getId()%></td>
+								style="padding-bottom: -5 ;padding-top: 4px;padding-bottom: 0px;"><%=p+1 %></td>
 							<td
-								style="padding-bottom: -5;padding-top: 4px;padding-bottom: 0px;"><%=tl.getStartMoney()%></td>
+								style="padding-bottom: -5;padding-top: 4px;padding-bottom: 0px;"><%=list.get(p).getSum()%></td>
 							<td
-								style="padding-bottom: -5;padding-top: 4px;padding-bottom: 0px;"><%=tl.getYear()%></td>
+								style="padding-bottom: -5;padding-top: 4px;padding-bottom: 0px;"><%=list.get(p).getYear()%></td>
 							<td
-								style="padding-bottom: -5;padding-top: 4px;padding-bottom: 0px;"><%=tl.getRate()%></td>
+								style="padding-bottom: -5;padding-top: 4px;padding-bottom: 0px;"><%=list.get(p).getRate()%></td>
 							<td
-								style="padding-bottom: -5;padding-top: 4px;padding-bottom: 0px;"><%=tl.getSum()%></td>
+								style="padding-bottom: -5;padding-top: 4px;padding-bottom: 0px;"><%=list.get(p).getSum()%></td>
 							<td
 								style="padding-bottom: -5;padding-top: 4px;padding-bottom: 0px;">
 								<ul>
 									<li><button id="modify" name = "submit" type="submit" class="btn btn-info" onclick="modify()" >修改</button></li>
-									<li><button id="delete" name = "delete" type="submit" class="btn btn-danger" onclick="datadelete('<%=j%>');" >删除</button></li>
+									<li><button id="delete" name = "delete" type="submit" class="btn btn-danger" onclick="datadelete('<%=j %>');" >删除</button></li>
 								</ul>
 								<input type="hidden" id = "deleteresult" name="deleteresult" value="">
 							</td>
 						</tr>
+						
 						<%
-							i++;
+							count++;
+							p++;
+							i++;	
 						}
 						%>
 					</table>
 				</form>
-				<div align="center" style = "margin-top: 161px;">
-					<ul class="pagination">
-						<li><a href='#'>&laquo;</a></li>
-						<li><a href='#'>1 </a></li>
-						<li><a href='#'>2</a></li>
-						<li><a href='#'>3</a></li>
-						<li><a href='#'>&raquo;</a></li>
-					</ul>
-				</div>
+				
 			</div>
 			<div class="tabBodyItem">
 				<p></p>
@@ -182,10 +228,31 @@ function datadelete(i)
 		</div>
 	</div>
 	<hr />
+	
+	<div align="center" id="Pagination" class="pagination"  style = "margin-top: 0px;padding-left: 850px;"> 
+						
+					<% 
+						int page_num;
+						if(rowcount<=5)
+							page_num=1;
+						else
+							page_num=(rowcount%5==0)?rowcount/5:rowcount/5+1;	
+					%>
+						<li><a href='list.jsp?page=1'>首页</a></li>
+					<%
+						for(int page_index=0;page_index<page_num ;page_index++)
+						{
+						
+					%>
+							<li ><a href='list.jsp?page=<%=page_index+1 %>'><%=page_index+1 %></a></li>
+					<%
+						}
+					%>
+						<li><a href='list.jsp?page=<%=page_num %>'>尾页</a></li>
+				</div>
 
 
-
-	<div class="footer" style="border-top-width: 100px;margin-top: 200px;">
+	<div class="footer" style="border-top-width: 0px;">
 		<div class="footer_media_test">
 			<p>©2016-2016 孙海林 江志彬 版权所有</p>
 
@@ -197,4 +264,5 @@ function datadelete(i)
 		</div>
 	</div>
 </body>
+
 </html>

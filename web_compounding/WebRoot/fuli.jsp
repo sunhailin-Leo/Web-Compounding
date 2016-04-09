@@ -11,7 +11,8 @@ String path = request.getContextPath();
 <meta http-equiv="description" content="this is my page">
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-
+<meta http-equiv="pragma" content="no-cache">   
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate"> 
 
 <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" type="text/css"></link>
 <link rel="stylesheet" href="prototype/css/common.css" type="text/css" />
@@ -22,96 +23,79 @@ String path = request.getContextPath();
 
 
 <script type="text/javascript">
-var xmlHttp;
+	var xmlHttp;
 	//创建xmlHttp
-	function createXMLHttpRequest()
-	{
-	 if(window.ActiveXObject)
-	 {
-	  xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
-	 }
-	 else if(window.XMLHttpRequest)
-	 {
-	  xmlHttp=new XMLHttpRequest();
-	 }
+	function createXMLHttpRequest() {
+		if (window.ActiveXObject) {
+			xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+		} else if (window.XMLHttpRequest) {
+			xmlHttp = new XMLHttpRequest();
+		}
 	}
-	
+
 	//拼出要发送的姓名数据
-	function createQueryString()
-	{
-	 var i = parseFloat(document.getElementById("num1").value);
-	 var j = parseFloat(document.getElementById("num2").value);
-	 var k = parseFloat(document.getElementById("num3").value);
-	 var sum = i * Math.pow(1 + k, j);
-	 if(isNaN(sum))
-	 {
-		alert("FUCK");
-		sum = "";
-	 }
-	 text = document.getElementById("endMoney");
-	 text.value = sum;
-	 var queryString = "num1=" + i + "&num2=" + j + "&num3=" + k + "&sum=" + sum; 
-	 //alert(queryString);
-	 return queryString;
+	function createQueryString() {
+		var i = parseFloat(document.getElementById("num1").value);
+		var j = parseFloat(document.getElementById("num2").value);
+		var k = parseFloat(document.getElementById("num3").value);
+		var sum = i * Math.pow(1 + k, j);
+		if (isNaN(sum)) {
+			sum = "";
+		}
+		text = document.getElementById("endMoney");
+		text.value = sum;
+		var queryString = "num1=" + i + "&num2=" + j + "&num3=" + k + "&sum="
+				+ sum;
+		return queryString;
 	}
-	/*
-	//使用get方式发送
-	function doRequestUsingGET()
+	//防止过度提交
+	function preventMoerSubmit()
 	{
-	 createXMLHttpRequest();
-	 var queryString="./GetAndPostExample?";
-	 queryString=queryString+createQueryString() + "&timeStamp=" + new Date().getTime();
-	 xmlHttp.onreadystatechange=handleStateChange;
-	 xmlHttp.open("GET",queryString,true);
-	 xmlHttp.send(null);
-	}
-	*/
+		$("#btnSave").attr("disabled", true); 
+		doRequestUsingPost();
+	} 
+	 
 	//使用post方式发送
-	function doRequestUsingPost()
-	{
-	 createXMLHttpRequest();
-	 //var url="./GetAndPostExample?timeStamp=" + new Date().getTime();
-	 var url ="./DataServlet?";
-	 var queryString=createQueryString();
-	 xmlHttp.open("POST",url,true);
-	 xmlHttp.onreadystatechange=handleStateChange;
-	 xmlHttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-	 xmlHttp.send(queryString);
+	function doRequestUsingPost() {
+		createXMLHttpRequest();
+		var url = "./DataServlet?";
+		var queryString = createQueryString();
+		xmlHttp.open("POST", url, true);
+		xmlHttp.onreadystatechange = handleStateChange;
+		xmlHttp.setRequestHeader("Content-Type",
+				"application/x-www-form-urlencoded");
+		xmlHttp.send(queryString);
 	}
 	
-	
-	function handleStateChange()
-	{
-	 if(xmlHttp.readyState==4)
-	 {
-	  if(xmlHttp.status==200)
-	  {
-	   //parseResults();
-	   //alert("数据提交成功");
-	  }
-	 }
+	function handleStateChange() {
+		if (xmlHttp.readyState == 4) {
+			if (xmlHttp.status == 200) {
+				//parseResults();
+				alert("数据提交成功");
+			}
+		}
 	}
 	//解析返回值
-	function parseResults()
-	{
-	 var responseDiv=document.getElementById("serverResponse");
-	 if(responseDiv.hasChildNodes())
-	 {
-	  responseDiv.removeChild(responseDiv.childNodes[0]);
-	 }
-	 var responseText=document.createTextNode(xmlHttp.responseText);
-	  alert("后台返回的返回值： "+xmlHttp.responseText);
-	 responseDiv.appendChild(responseText);
+	function parseResults() {
+		var responseDiv = document.getElementById("serverResponse");
+		if (responseDiv.hasChildNodes()) {
+			responseDiv.removeChild(responseDiv.childNodes[0]);
+		}
+		var responseText = document.createTextNode(xmlHttp.responseText);
+		alert("后台返回的返回值： " + xmlHttp.responseText);
+		responseDiv.appendChild(responseText);
 	}
+	
 </script>
 
+
 <script>
-		function win(){
+		function win()
+		{
 			window.onload=document.getElementById("num1").focus();
 		}
 </script>
 	
-
 </head>
 	
 <body onload="win()">
@@ -135,8 +119,7 @@ var xmlHttp;
 					<div class="collapse navbar-collapse"
 						id="bs-example-navbar-collapse-1">
 						<ul class="nav navbar-nav">
-							<li class=""><a href="#">Funciton Comming Soon<span class="sr-only">(current)</span>
-							</a>
+							<li class="drowdown"><a href="#">Funciton Comming Soon<span class="sr-only">(current)</span></a>
 							</li>
 						</ul>
 					</div>
@@ -168,7 +151,7 @@ var xmlHttp;
 									<span class="red">*</span>本金：
 								</td>
 								<td>
-									<input class="form-control" name="startMoney" onblur="isnum()"  id="num1" value ="">
+									<input class="form-control" name="startMoney" onblur="isNum()"  id="num1" value ="">
 									<span class="errorMsg"></span>
 								</td>
 							</tr>
@@ -178,7 +161,7 @@ var xmlHttp;
 									<span class="red">*</span>存的年数：
 								</td>
 								<td>
-									<input class="form-control" name="years" onblur="isnum()" id="num2" value = "">
+									<input class="form-control" name="years" onblur="isNum()" id="num2" value = "">
 									<span class="errorMsg"></span>
 								</td>
 							</tr>	
@@ -187,7 +170,7 @@ var xmlHttp;
 									<span class="red">*</span>利率：
 								</td>
 								<td>
-									<input  class="form-control " placeholder="请输入您的利率  3%=0.03" name="r" onblur="isnum()" id="num3" value = "">
+									<input  class="form-control " placeholder="请输入您的利率  3%=0.03" name="r" onblur="isNum()" id="num3" value = "">
 									<span class="errorMsg"></span>
 								</td>
 							</tr>	
@@ -204,10 +187,10 @@ var xmlHttp;
 							
 							<tr>
 								<td class="labelTd">
-									<input class="btn btn-success" type="reset" value="重置" onclick="cls()">
+									<button class="btn btn-success" type="reset" onclick="cls()">重置</button>
 								</td>
 								<td>
-									<input class="form-control btn btn-success" type="button" value="计算" onclick="doRequestUsingPost()" >
+									<button class="form-control btn btn-success"  id = "btnSave" name = "btnSave" type="button" onclick="preventMoerSubmit()" >计算</button>
 								</td>
 							</tr>
 						</table>
@@ -244,7 +227,7 @@ var xmlHttp;
 
 			<p>信息：广州商学院 商软2班  223/225</p>
 
-			<p>The First Version</p>
+			<p>0.0.4 lastest</p>
 
 			<p>联系方式: 你猜猜</p>
 		</div>
