@@ -1,5 +1,5 @@
-<%@page import="com.leo.bean.DataReturnInfo"%>
-<%@page import="com.leo.dao.DataReturn"%>
+<%@page import="com.leo.dao.DataDanliReturn"%>
+<%@page import="com.leo.bean.DataDanliReturnInfo"%>
 <%@ page language="java" import="java.util.*,java.io.*" pageEncoding="UTF-8"%>
 <%
 String path = request.getContextPath();
@@ -24,7 +24,8 @@ String path = request.getContextPath();
 <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="prototype/js/jquery-1.7.min.js"></script>
 <script type="text/javascript" src="prototype/js/jquery.pagination.js"></script>
-<script type="text/javascript" src="funciton.js"></script>
+<script type="text/javascript" src="function.js"></script>
+
 
 
 
@@ -32,7 +33,7 @@ String path = request.getContextPath();
 
 function modify()
 {
-	alert("Coming Soon!");
+	alert("Fuck");
 }
 
 
@@ -45,7 +46,7 @@ function datadelete(i)
 		result = arguments[s];
 	}
 	document.getElementById("deleteresult").value = result;
-	//alert("已提交");
+	alert("已提交" + deletesult);
 }
 
 </script>
@@ -137,77 +138,79 @@ function datadelete(i)
 			<li><a href="daikuan.jsp">贷款</a></li>
 			<li><a href="list.jsp" class="tabItemCurrent">投资报表</a></li>
 		</div>
-		<div class="tabBodyContainer" style ="height: 520px;">
+		<div class="tabBodyContainer" style ="height: 500px;width: 678px;">
 			<div class="tabBodyItem tabBodyCurrent">
 				<div   class="pagination "  style = "margin-top: 0px;padding-left: 0px;margin-bottom: -1px;"> 
-					<li class="active"><a href='list.jsp' style="height: 64px;width: 116px;padding-left: 37px; padding-top: 15px;font-size: 20px">复利</a></li>
-					<li><a href='listDanli.jsp' style="height: 64px;width: 116px;padding-left: 37px; padding-top: 15px;font-size: 20px">单利</a></li>
+					<li ><a href='list.jsp' style="height: 64px;width: 116px;padding-left: 37px; padding-top: 15px;font-size: 20px">复利</a></li>
+					<li class="active"><a href='listDanli.jsp' style="height: 64px;width: 116px;padding-left: 37px; padding-top: 15px;font-size: 20px">单利</a></li>
 				</div>
-				<form  id = "form2" action="DataDeleteServlet"  method = "post"> 
-					<table class="table table-hover" border="1" align="center"
-						style="border-top-width: 2px; margin-right: 1px;border-left-width: 1px;border-right-width: 1px;border-bottom-width: 2px;margin-top: 1px; margin-bottom 1px;">
-						<tr>
-							<td><strong>投资目录</strong></td>
-							<td><strong>金额</strong>
-							</td>
-							<td><strong>年份</strong>
-							</td>
-							<td><strong>利率</strong>
-							</td>
-							<td><strong>终值</strong>
-							</td>
-							<td><strong>修改/删除</strong></td>
-						</tr>
-							<%
-							int p;
-							String page1=request.getParameter("page");//获得按下的按钮值
-							if(page1==null){
-								p=1;
-							}
-							else{
-								p=Integer.parseInt(page1);
-							}
-							//System.out.println("p="+p);
-							DataReturn DR = new DataReturn();
-							List<DataReturnInfo> list = DR.readFirstTitle();
-							int rowcount=list.size();
-							int i = 0;
-							int count=0;
-							p=p*5-5;
-							//System.out.println("p="+p);
-								while(p<list.size()&&count<5) {
-								int j = list.get(i).getId();
-							%>
-						<tr>
-							<td
-								style="padding-bottom: -5 ;padding-top: 4px;padding-bottom: 0px;"><%=p+1 %></td>
-							<td
-								style="padding-bottom: -5;padding-top: 4px;padding-bottom: 0px;"><%=list.get(p).getStartMoney()%></td>
-							<td
-								style="padding-bottom: -5;padding-top: 4px;padding-bottom: 0px;"><%=list.get(p).getYear()%></td>
-							<td
-								style="padding-bottom: -5;padding-top: 4px;padding-bottom: 0px;"><%=list.get(p).getRate()%></td>
-							<td
-								style="padding-bottom: -5;padding-top: 4px;padding-bottom: 0px;"><%=list.get(p).getSum()%></td>
-							<td
-								style="padding-bottom: -5;padding-top: 4px;padding-bottom: 0px;">
-								<ul>
-									<li><button id="modify" name = "submit" type="submit" class="btn btn-info" onclick="modify()" >修改</button></li>
-									<li><button id="delete" name = "delete" type="submit" class="btn btn-danger" onclick="datadelete('<%=j %>');" >删除</button></li>
-								</ul>
-								<input type="hidden" id = "deleteresult" name="deleteresult" value="">
-							</td>
-						</tr>
-						
-						<%
-							count++;
-							p++;
-							i++;	
-						}
-						%>
-					</table>
-				</form>
-				
+						<form id="form3" action="DataDeleteServlet" method="post">
+							<table class="table table-hover" border="1" align="center"
+								style="border-top-width: 2px; margin-right: 1px;border-left-width: 1px;border-right-width: 1px;border-bottom-width: 2px;margin-top: 1px; margin-bottom :1px ">
+								<tr>
+									<td><strong>投资目录</strong></td>
+									<td><strong>金额</strong>
+									</td>
+									<td><strong>年份</strong>
+									</td>
+									<td><strong>利率</strong>
+									</td>
+									<td><strong>终值</strong>
+									</td>
+									<td><strong>修改/删除</strong></td>
+								</tr>
+								<%
+									int danli_p;
+									String danli_page = request.getParameter("danli_page");//获得按下的按钮值
+									if (danli_page == null) {
+										danli_p = 1;
+									} else {
+										danli_p = Integer.parseInt(danli_page);
+									}
+									DataDanliReturn DDR = new DataDanliReturn();
+									List<DataDanliReturnInfo> Danlilist = DDR.readDataDanli();
+									int danli_rowcount = Danlilist.size();
+									int danli_i = 0;
+									int danli_count = 0;
+									danli_p = danli_p * 5 - 5;
+									System.out.println(Danlilist.get(0).getSum());
+									while (danli_p < Danlilist.size() && danli_count < 5) {
+										int danli_j = Danlilist.get(danli_i).getId();
+								%>
+								<tr>
+									<td
+										style="padding-bottom: -5 ;padding-top: 4px;padding-bottom: 0px;"><%=danli_p + 1%></td>
+									<td
+										style="padding-bottom: -5;padding-top: 4px;padding-bottom: 0px;"><%=Danlilist.get(danli_p).getStartMoney()%></td>
+									<td
+										style="padding-bottom: -5;padding-top: 4px;padding-bottom: 0px;"><%=Danlilist.get(danli_p).getYear()%></td>
+									<td
+										style="padding-bottom: -5;padding-top: 4px;padding-bottom: 0px;"><%=Danlilist.get(danli_p).getRate()%></td>
+									<td
+										style="padding-bottom: -5;padding-top: 4px;padding-bottom: 0px;"><%=Danlilist.get(danli_p).getSum()%></td>
+									<td
+										style="padding-bottom: -5;padding-top: 4px;padding-bottom: 0px;">
+										<ul>
+											<li><button id="modify" name="submit" type="submit"
+													class="btn btn-info" onclick="modify()" disabled="disabled">修改</button>
+											</li>
+											<li><button id="delete" name="delete" type="submit"
+													class="btn btn-danger" onclick="datadelete('<%=danli_j%>');">删除</button>
+											</li>
+										</ul> <input type="hidden" id="deleteresult" name="deleteresult"value="">
+									</td>
+								</tr>
+
+								<%
+										danli_count++;
+										danli_p++;
+										danli_i++;
+									}
+								%>
+							</table>
+						</form>
+					</div>
+				</div>
 			</div>
 			<div class="tabBodyItem">
 				<p></p>
@@ -232,29 +235,30 @@ function datadelete(i)
 			</div>
 		</div>
 	</div>
+</div>	
 	<hr />
 	
 	<div align="center" id="Pagination" class="pagination"  style = "margin-top: 0px;padding-left: 880px;"> 
 						
 					<% 
-						int page_num;
-						if(rowcount<=5)
-							page_num=1;
+						int danli_page_num;
+						if(danli_rowcount<=5)
+							danli_page_num=1;
 						else
-							page_num=(rowcount%5==0)?rowcount/5:rowcount/5+1;	
+							danli_page_num=(danli_rowcount%5==0)?danli_rowcount/5:danli_rowcount/5+1;	
 					%>
-						<li><a href='list.jsp?page=1'>首页</a></li>
+						<li><a href='listDanli.jsp?danli_page=1'>首页</a></li>
 					<%
-						for(int page_index=0;page_index<page_num ;page_index++)
+						for(int danli_page_index=0;danli_page_index < danli_page_num ;danli_page_index++)
 						{
 						
 					%>
-							<li ><a href='list.jsp?page=<%=page_index+1 %>'><%=page_index+1 %></a></li>
+							<li ><a href='listDanli.jsp?danli_page=<%=danli_page_index+1 %>'><%=danli_page_index+1 %></a></li>
 					<%
 						}
 					%>
-						<li><a href='list.jsp?page=<%=page_num %>'>尾页</a></li>
-				</div>
+						<li><a href='listDanli.jsp?danli_page=<%=danli_page_num %>'>尾页</a></li>
+	</div>
 
 
 	<div class="footer" style="border-top-width: 0px;">
@@ -263,7 +267,7 @@ function datadelete(i)
 
 			<p>信息：广州商学院 商软2班 223/225</p>
 
-			<p>The First Version</p>
+			<p>0.0.4 lastest</p>
 
 			<p>联系方式: 你猜猜</p>
 		</div>

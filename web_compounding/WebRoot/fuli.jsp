@@ -151,7 +151,7 @@ String path = request.getContextPath();
 									<span class="red">*</span>本金：
 								</td>
 								<td>
-									<input class="form-control" name="startMoney" onblur="isNum()"  id="num1" value ="">
+									<input class="form-control" name="startMoney" onblur="isnum()"  id="num1" value ="">
 									<span class="errorMsg"></span>
 								</td>
 							</tr>
@@ -161,7 +161,7 @@ String path = request.getContextPath();
 									<span class="red">*</span>存的年数：
 								</td>
 								<td>
-									<input class="form-control" name="years" onblur="isNum()" id="num2" value = "">
+									<input class="form-control" name="years" onblur="isnum()" id="num2" value = "">
 									<span class="errorMsg"></span>
 								</td>
 							</tr>	
@@ -170,7 +170,7 @@ String path = request.getContextPath();
 									<span class="red">*</span>利率：
 								</td>
 								<td>
-									<input  class="form-control " placeholder="请输入您的利率  3%=0.03" name="r" onblur="isNum()" id="num3" value = "">
+									<input  class="form-control " placeholder="请输入您的利率  3%=0.03" name="r" onblur="isnum()" id="num3" value = "">
 									<span class="errorMsg"></span>
 								</td>
 							</tr>	
@@ -194,6 +194,7 @@ String path = request.getContextPath();
 								</td>
 							</tr>
 						</table>
+							<div align="center" style="font-size: 12px">温馨提示：计算完后请按重置键，防止恶意重复提交</div>
 						</form>			
 			</div>
 			<div class="tabBodyItem">

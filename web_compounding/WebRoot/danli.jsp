@@ -5,33 +5,86 @@ String path = request.getContextPath();
 <!DOCTYPE html>
 <html>
 <head>
-<title>index.html</title>
+<title>金融计算器</title>
 
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="this is my page">
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-
 <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"
 	type="text/css"></link>
 <script type="text/javascript" src="js/jquery-1.7.min.js"></script>
 <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
-
 <link rel="stylesheet" href="prototype/css/common.css" type="text/css" />
 <link rel="stylesheet" href="mycss.css" type="text/css" />
+<script type="text/javascript" src="funciton.js"></script>
 
-	<script>	
-        function add(){
-       		var i =	parseFloat(document.getElementById("num1").value);
-       		var j = parseFloat(document.getElementById("num2").value);
-       		var k = parseFloat(document.getElementById("num3").value);
-       		//sum=money*r*years;
-        	var sum=i*k*j;
-          	text=document.getElementById("endMoney");
-          	text.value=sum+i;
-        }
 
-    </script>
+<script type="text/javascript">
+	var xmlHttp;
+	//创建xmlHttp
+	function createXMLHttpRequest() {
+		if (window.ActiveXObject) {
+			xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+		} else if (window.XMLHttpRequest) {
+			xmlHttp = new XMLHttpRequest();
+		}
+	}
+
+	//拼出要发送的姓名数据
+	function createQueryString() {
+		var i = parseFloat(document.getElementById("num1").value);
+		var j = parseFloat(document.getElementById("num2").value);
+		var k = parseFloat(document.getElementById("num3").value);
+		var sum=i*k*j;
+		if (isNaN(sum)) {
+			sum = "";
+		}
+		text = document.getElementById("endMoney");
+		text.value = sum + i;
+		var queryString = "num1=" + i + "&num2=" + j + "&num3=" + k + "&sum="
+				+ sum;
+		return queryString;
+	}
+	//防止过度提交
+	function preventMoerSubmit()
+	{
+		$("#btnSave").attr("disabled", true); 
+		doRequestUsingPost();
+	} 
+	 
+	//使用post方式发送
+	function doRequestUsingPost() {
+		createXMLHttpRequest();
+		var url = "./DataDanliServlet?";
+		var queryString = createQueryString();
+		xmlHttp.open("POST", url, true);
+		xmlHttp.onreadystatechange = handleStateChange;
+		xmlHttp.setRequestHeader("Content-Type",
+				"application/x-www-form-urlencoded");
+		xmlHttp.send(queryString);
+	}
+	
+	function handleStateChange() {
+		if (xmlHttp.readyState == 4) {
+			if (xmlHttp.status == 200) {
+				//parseResults();
+				alert("数据提交成功");
+			}
+		}
+	}
+	//解析返回值
+	function parseResults() {
+		var responseDiv = document.getElementById("serverResponse");
+		if (responseDiv.hasChildNodes()) {
+			responseDiv.removeChild(responseDiv.childNodes[0]);
+		}
+		var responseText = document.createTextNode(xmlHttp.responseText);
+		alert("后台返回的返回值： " + xmlHttp.responseText);
+		responseDiv.appendChild(responseText);
+	}
+	
+</script>
     <script>
 		function win(){
 			window.onload=document.getElementById("num1").focus();
@@ -132,13 +185,14 @@ String path = request.getContextPath();
 							
 							<tr>
 								<td class="labelTd">
-									<input class="btn btn-success" type="submit" value="重置" onclick="cls()">
+									<button class="btn btn-success" type="submit"  onclick="cls()">重置</button>
 								</td>
 								<td>
-									<input class="form-control btn btn-success" type="submit" value="计算" onclick="add()">
+									<button class="form-control btn btn-success " id = "btnSave" name ="btnSave" type="button" value="计算" onclick="preventMoerSubmit()">计算</button>
 								</td>
 							</tr>
 						</table>
+							<div align="center" style="font-size: 12px">温馨提示：计算完后请按重置键，防止恶意重复提交</div>
 					</form>
 
 					
@@ -171,7 +225,7 @@ String path = request.getContextPath();
 
 			<p>信息：广州商学院 商软2班  223/225</p>
 
-			<p>The First Version</p>
+			<p>0.0.4 lastest</p>
 
 			<p>联系方式: 你猜猜</p>
 		</div>

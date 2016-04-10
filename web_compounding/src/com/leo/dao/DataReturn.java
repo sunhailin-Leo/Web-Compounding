@@ -4,16 +4,16 @@ package com.leo.dao;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
 import com.leo.bean.DataReturnInfo;
 
 public class DataReturn {
 
-	public List<DataReturnInfo> readFirstTitle(){
+	Connection con=null;
+    PreparedStatement psmt=null;
+    ResultSet rs=null;
+	public List<DataReturnInfo> readFirstTitle()
+	{
 		         List<DataReturnInfo> list =new ArrayList<DataReturnInfo>();
-		         Connection con=null;
-		         PreparedStatement psmt=null;
-		         ResultSet rs=null;
 		         try {
 		             con = MySQLDBCon.getConn();
 		             String sql="select * from t_compounding";

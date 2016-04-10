@@ -86,7 +86,7 @@ String path = request.getContextPath();
 			<li><a href="lilv.jsp">求报酬率</a></li>
 			<li><a href="dingtou.jsp">定投计算</a></li>
 			<li><a href="daikuan.jsp" class="tabItemCurrent">贷款</a></li>
-			<li><a href="#">投资报表</a></li>
+			<li><a href="list.jsp">投资报表</a></li>
 		</div>
 		<div class="tabBodyContainer">
 			<div class="tabBodyItem tabBodyCurrent">
@@ -171,7 +171,7 @@ String path = request.getContextPath();
 
 			<p>信息：广州商学院 商软2班  223/225</p>
 
-			<p>The First Version</p>
+			<p>0.0.4 lastest</p>
 
 			<p>联系方式: 你猜猜</p>
 		</div>

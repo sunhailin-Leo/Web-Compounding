@@ -49,4 +49,35 @@ public class DataDeleteDao {
         }
         return false;
     }
+	
+	public boolean deleteDanli(DataDeleteInfo DDI)
+	{
+		Connection con=null;
+        PreparedStatement psmt=null;  
+        try {
+            con= MySQLDBCon.getConn(); 
+            String sql="delete from t_simple_interest where f_id='" + DDI.getId() + "'";
+            psmt=con.prepareStatement(sql);
+            psmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally
+        {
+            try 
+            {
+                if(psmt!=null)
+                {
+                    psmt.close();
+                }
+                if(con!=null)
+                {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+	}
 }

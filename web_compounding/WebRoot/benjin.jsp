@@ -172,7 +172,7 @@ String path = request.getContextPath();
 
 			<p>信息：广州商学院 商软2班  223/225</p>
 
-			<p>The First Version</p>
+			<p>0.0.4 lastest</p>
 
 			<p>联系方式: 你猜猜</p>
 		</div>

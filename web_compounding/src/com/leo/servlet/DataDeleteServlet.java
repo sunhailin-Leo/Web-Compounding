@@ -45,6 +45,7 @@ public class DataDeleteServlet extends HttpServlet{
 		DataDeleteInfo DDI = new DataDeleteInfo();
 		DDI.setId(id);
 		boolean result = DataDeleteDao.getInstance().delete(DDI);
+		boolean result1 = DataDeleteDao.getInstance().deleteDanli(DDI);
 		response.setContentType("text/html");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out = response.getWriter();
@@ -53,10 +54,9 @@ public class DataDeleteServlet extends HttpServlet{
 			out.print("alert('删除成功!');");
 			out.print("window.location.href='list.jsp'");
 			out.println("</script>");
-		}else{	
-	
+		}else if(result1){	
 			out.println("<script>");
-			out.print("alert('存入失败!');");
+			out.print("alert('录删除成功!');");
 			out.print("window.location.href='fuli.jsp'");
 			out.println("</script>");
 		}
