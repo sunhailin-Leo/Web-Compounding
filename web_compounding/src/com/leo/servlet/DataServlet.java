@@ -87,7 +87,6 @@ public class DataServlet extends HttpServlet{
 		out.flush();
 		out.close();
 	}
-	
 	/**
 	 * Initialization of the servlet. <br>
 	 *

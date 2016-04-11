@@ -1,38 +1,40 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@ page language="java" import="java.util.*,java.sql.*" pageEncoding="UTF-8"%>
 <%
 String path = request.getContextPath();
 %>
-<!DOCTYPE html>
 <html>
 <head>
 <title>金融计算器</title>
-
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="this is my page">
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"
-	type="text/css"></link>
-<script type="text/javascript" src="js/jquery-1.7.min.js"></script>
-<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+<meta http-equiv="pragma" content="no-cache">   
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate"> 
+<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" type="text/css"></link>
 <link rel="stylesheet" href="prototype/css/common.css" type="text/css" />
 <link rel="stylesheet" href="mycss.css" type="text/css" />
-<script type="text/javascript" src="funciton.js"></script>
-
-
-<script type="text/javascript">
-	var xmlHttp;
-	//创建xmlHttp
-	function createXMLHttpRequest() {
-		if (window.ActiveXObject) {
-			xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
-		} else if (window.XMLHttpRequest) {
-			xmlHttp = new XMLHttpRequest();
+<link rel="stylesheet" href="css/reset.css" type="text/css"></link>
+<link rel="stylesheet" href="css/style.css" type="text/css"></link>
+<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="js/jquery.slotmachine.js"></script>
+<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="function.js"></script>
+<script type="text/javascript">	
+		//使用post方式发送
+		function doRequestUsingPost() 
+		{
+			createXMLHttpRequest();
+			var url = "./DataDanliServlet?";
+			var queryString = createQueryString();
+			xmlHttp.open("POST", url, true);
+			xmlHttp.onreadystatechange = handleStateChange;
+			xmlHttp.setRequestHeader("Content-Type",
+					"application/x-www-form-urlencoded");
+			xmlHttp.send(queryString);
 		}
-	}
-
-	//拼出要发送的姓名数据
-	function createQueryString() {
+        function createQueryString() {
 		var i = parseFloat(document.getElementById("num1").value);
 		var j = parseFloat(document.getElementById("num2").value);
 		var k = parseFloat(document.getElementById("num3").value);
@@ -45,56 +47,11 @@ String path = request.getContextPath();
 		var queryString = "num1=" + i + "&num2=" + j + "&num3=" + k + "&sum="
 				+ sum;
 		return queryString;
-	}
-	//防止过度提交
-	function preventMoerSubmit()
-	{
-		$("#btnSave").attr("disabled", true); 
-		doRequestUsingPost();
-	} 
-	 
-	//使用post方式发送
-	function doRequestUsingPost() {
-		createXMLHttpRequest();
-		var url = "./DataDanliServlet?";
-		var queryString = createQueryString();
-		xmlHttp.open("POST", url, true);
-		xmlHttp.onreadystatechange = handleStateChange;
-		xmlHttp.setRequestHeader("Content-Type",
-				"application/x-www-form-urlencoded");
-		xmlHttp.send(queryString);
-	}
-	
-	function handleStateChange() {
-		if (xmlHttp.readyState == 4) {
-			if (xmlHttp.status == 200) {
-				//parseResults();
-				alert("数据提交成功");
-			}
-		}
-	}
-	//解析返回值
-	function parseResults() {
-		var responseDiv = document.getElementById("serverResponse");
-		if (responseDiv.hasChildNodes()) {
-			responseDiv.removeChild(responseDiv.childNodes[0]);
-		}
-		var responseText = document.createTextNode(xmlHttp.responseText);
-		alert("后台返回的返回值： " + xmlHttp.responseText);
-		responseDiv.appendChild(responseText);
-	}
-	
-</script>
-    <script>
-		function win(){
-			window.onload=document.getElementById("num1").focus();
-		}
+	}		
 	</script>
 </head>
-	
-<body onload="win()">
+<body>
 	<div class="navigation">
-
 		<nav class="navbar navbar-default navbar-fixed-top">
 			<div class="container-fluid">
 				<!-- Brand and toggle get grouped for better mobile display -->
@@ -109,7 +66,6 @@ String path = request.getContextPath();
 						</button>
 						<a class="navbar-brand" href="fuli.jsp"><strong>投资计算器</strong></a>
 					</div>
-
 					<!-- Collect the nav links, forms, and other content for toggling -->
 					<div class="collapse navbar-collapse"
 						id="bs-example-navbar-collapse-1">
@@ -117,7 +73,6 @@ String path = request.getContextPath();
 							<li class=""><a href="#">Funciton Comming Soon<span class="sr-only">(current)</span>
 							</a>
 							</li>
-
 						</ul>
 					</div>
 					<!-- /.navbar-collapse -->
@@ -126,8 +81,6 @@ String path = request.getContextPath();
 			</div>
 		</nav>
 	</div>
-
-
 	<div id="TabMain">
 		<div class="tabItemContainer">
 			<li><a href="fuli.jsp" >复利计算</a></li>
@@ -140,26 +93,25 @@ String path = request.getContextPath();
 			<li><a href="list.jsp">投资报表</a></li>
 		</div>
 		<div class="tabBodyContainer">
-			<div class="tabBodyItem tabBodyCurrent">
+			<div class="tabBodyItem tabBodyCurrent" style="height: 350px">
 				<p>欢迎使用投资计算器</p>
-					<form>
+					<form >
 						<table class="table">
 							<tr >
-								<td class="labelTd" style=" width: 235px; " >
+								<td  class="labelTd">
 									<span class="red">*</span>本金：
 								</td>
 								<td>
-									<input class="form-control" name="startMoney" onblur="isnum()" id="num1">
+									<input class="form-control" name="startMoney" onblur="isnum1()" id="num1">
 									<span class="errorMsg"></span>
 								</td>
-							</tr>
-					
+							</tr>				
 							<tr >
 								<td  class="labelTd">
 									<span class="red">*</span>存的年数：
 								</td>
 								<td>
-									<input class="form-control" name="years" onblur="isnum()" id="num2">
+									<input class="form-control" name="years" onblur="isnum2()" id="num2">
 									<span class="errorMsg"></span>
 								</td>
 							</tr>	
@@ -168,7 +120,7 @@ String path = request.getContextPath();
 									<span class="red">*</span>利率：
 								</td>
 								<td>
-									<input class="form-control" placeholder="请输入您的利率   3%=0.03" name="r" onblur="isnum()" id="num3">
+									<input class="form-control" placeholder="请输入您的利率   3%=0.03" name="r" onblur="isnum3()" id="num3">
 									<span class="errorMsg"></span>
 								</td>
 							</tr>	
@@ -177,25 +129,22 @@ String path = request.getContextPath();
 									<span class="red">*</span>终值：
 								</td>
 								<td>
-									<input class="form-control" name="endMoney" id="endMoney" disabled="disabled">
+									<input class="form-control" name="endMoney" id="endMoney" readonly="readonly">
 									
 									<span class="errorMsg"></span>
 								</td>
-							</tr>
-							
+							</tr>						
 							<tr>
 								<td class="labelTd">
-									<button class="btn btn-success" type="submit"  onclick="cls()">重置</button>
+									<input class="btn btn-success" type="submit" value="重置" onclick="cls()">
 								</td>
 								<td>
-									<button class="form-control btn btn-success " id = "btnSave" name ="btnSave" type="button" value="计算" onclick="preventMoerSubmit()">计算</button>
+									<input class="form-control btn btn-success" type="button" value="计算" onclick="preventMoreSubmit()">
 								</td>
 							</tr>
 						</table>
-							<div align="center" style="font-size: 12px">温馨提示：计算完后请按重置键，防止恶意重复提交</div>
-					</form>
-
-					
+						<div align="center"><font style="font-size: 12px">温馨提示：计算完后请按重置键，防止恶意提交</font></div>
+					</form>			
 			</div>
 			<div class="tabBodyItem">
 				<p></p>
@@ -218,23 +167,15 @@ String path = request.getContextPath();
 		</div>
 	</div>
 	<hr />
-
 	<div class="footer">
 		<div class="footer_media_test">
 			<p>©2016-2016 孙海林 江志彬 版权所有</p>
-
 			<p>信息：广州商学院 商软2班  223/225</p>
-
-			<p>0.0.4 lastest</p>
-
+			<p>1.0.0 lastest</p>
 			<p>联系方式: 你猜猜</p>
 		</div>
 	</div>
-
-
 </body>
-
 <script type="text/javascript" src="prototype/js/jquery-1.7.min.js"></script>
 <script type="text/javascript" src="function.js"></script>
-
 </html>

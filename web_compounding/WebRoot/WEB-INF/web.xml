@@ -29,7 +29,7 @@
 		<url-pattern>/DataDeleteServlet</url-pattern>
 	</servlet-mapping>
 	
-	<!-- danli.jsp提交 -->
+<!-- danli.jsp提交 -->
 	<servlet>
 		<servlet-name>DataDanliServlet</servlet-name>
 		<servlet-class>com.leo.servlet.DataDanliServlet</servlet-class>

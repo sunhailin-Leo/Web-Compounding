@@ -27,7 +27,6 @@ public class DataDanliReturn {
                 int f_year = rs.getInt("f_year");
                 double f_rate = rs.getDouble("f_rate");
                 float f_sum = rs.getFloat("f_sum");
-                System.out.println(f_id+" "+f_money+" "+f_year+" "+f_rate+" "+f_sum);
                 DataDanliReturnInfo DDR=new DataDanliReturnInfo(f_id,f_money,f_year,f_rate,f_sum);
                 Danlilist.add(DDR);
             }
